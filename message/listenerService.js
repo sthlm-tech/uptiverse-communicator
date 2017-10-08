@@ -22,13 +22,13 @@ function ListenerService() {
 		Listener.findOne(query,
 			function(err, foundListener){
 				if(err){ deferred.reject(); }
-
+				var url = data.host + data.path;
 				if(!foundListener){
 					var listener = new Listener();
 					listener.name = data.name;
 					listener.scope = data.scope;
 					listener.message = data.message;
-					listener.url = data.url;
+					listener.url = url;
 					listener.created = new Date();
 					listener.updated = new Date();
 
@@ -37,8 +37,8 @@ function ListenerService() {
 					});
 
 				}
-				else if(foundListener.url !== data.url){
-					foundListener.url = data.url;
+				else if(foundListener.url !== url){
+					listener.url = url;
 					foundListener.updated = new Date();
 					foundListener.save(function(err, createdListener){
 						deferred.resolve(createdListener);
