@@ -15,7 +15,6 @@ module.exports = function() {
 
 	App.Express.post( baseUrl + "/listener", function (req, res) {
 		var body = req.body;
-		body.host = req.protocol + '://' + req.headers.host;
 		listener.register(req.body)
 		.then(function(response){
 			res.send(response);
