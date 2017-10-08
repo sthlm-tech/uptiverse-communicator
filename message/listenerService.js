@@ -38,7 +38,7 @@ function ListenerService() {
 
 				}
 				else if(foundListener.url !== url){
-					listener.url = url;
+					foundListener.url = url;
 					foundListener.updated = new Date();
 					foundListener.save(function(err, createdListener){
 						deferred.resolve(createdListener);
