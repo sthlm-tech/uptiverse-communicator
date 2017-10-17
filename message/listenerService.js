@@ -6,7 +6,19 @@ function ListenerService() {
 
 	self.list = function(data, user){
 		var deferred = when.defer();
-		var query = { scope: data.scope, message: data.message };
+		var scopeQuery = [{'scope':'*'}];
+		var messageQuery =[{'message':'*'}];
+
+		if(data.scope){ scopeQuery.push({'scope':data.scope})}
+		if(data.message){ messageQuery.push({'message':data.message})}
+
+		var query = {
+	       $and: [
+	           { $or: scopeQuery },
+	           { $or: messageQuery }
+	       ]
+	   };
+
 		Listener.find(query, function(err, foundListeners){
 				if(err){ deferred.reject(); }
 				if(foundListeners){
