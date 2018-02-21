@@ -8,10 +8,8 @@ function MessageService() {
 
 	self.publish = function(input, token){
 		var deferred = when.defer();
-
 		listener.list(input)
 		.then(function(list){
-			//call service with data
 			for(var i = 0; i < list.length;i++){
 				var item = list[i];
 				request
@@ -20,6 +18,7 @@ function MessageService() {
 				 .set('Authorization', token)
 				 .end(function(err, response){
 						if (err || !response.ok) {
+							console.log(err);
 							//store message for later push
 						}
 						else {
@@ -30,7 +29,7 @@ function MessageService() {
 			}
 
 		});
-		deferred.resolve();
+		//deferred.resolve();
 		return deferred.promise;
 	}
 
