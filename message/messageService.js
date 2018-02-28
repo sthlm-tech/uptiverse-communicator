@@ -22,9 +22,8 @@ function MessageService() {
 				 .end(function(err, response){
 					 var message = new Message();
 
-					 message.name = data.name;
-					 message.scope = data.scope;
-					 message.message = data.message;
+					 message.name = input.message;
+					 message.scope = input.scope;
 					 message.url = url;
 					 message.token = token;
 					 message.data = data;
