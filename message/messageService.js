@@ -1,4 +1,5 @@
 var Listener = require("./Listener");
+var Message = require("./Message");
 var when = require('when');
 var listener = require("./listenerService");
 var request = require("superagent");
@@ -12,18 +13,29 @@ function MessageService() {
 		.then(function(list){
 			for(var i = 0; i < list.length;i++){
 				var item = list[i];
+				var url = item.url;
+				var data = input.data;
 				request
-				 .post(item.url)
-				 .send(input.data)
+				 .post(url)
+				 .send(data)
 				 .set('Authorization', token)
 				 .end(function(err, response){
-						if (err || !response.ok) {
-							console.log(err);
-							//store message for later push
-						}
-						else {
-							// make sure that message is removed if push gets
-						}
+					 var message = new Message();
+
+					 message.name = data.name;
+					 message.scope = data.scope;
+					 message.message = data.message;
+					 message.url = url;
+					 message.token = token;
+					 message.data = data;
+					 message.sucessfullySent = response.ok;
+					 message.created = new Date();
+
+					 message.save(function(err, createdMessage){
+						 if(err){console.log(err);}
+						 deferred.resolve();
+					 });
+
 					});
 
 			}
