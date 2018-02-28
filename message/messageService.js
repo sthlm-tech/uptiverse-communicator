@@ -22,11 +22,10 @@ function MessageService() {
 				 .end(function(err, response){
 					 var message = new Message();
 
-					 message.name = item.name;
 					 message.message = input.message;
 					 message.scope = input.scope;
-					 message.url = url;
 					 message.token = token;
+					 message.listener = item;
 					 message.data = data;
 					 message.sucessfullySent = response.ok;
 					 message.created = new Date();
